@@ -14,7 +14,6 @@ public class UserService {
     public void registerUser(String username, String password) {
         User existingUser = this.userRepository.findByUsername(username);
         if (existingUser != null) {
-            System.out.println("El usuario ya existe");
             return;
         }
         User user = new User(username, password);
@@ -23,13 +22,16 @@ public class UserService {
     public boolean login(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            System.out.println("El usuario no existe");
+            System.out.println("User doesn't exist");
             return false;
         }
         return user.checkPassword(password);
     }
     public User getUserById(String id) {
         return userRepository.findById(id);
+    }
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }

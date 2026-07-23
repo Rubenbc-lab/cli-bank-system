@@ -3,11 +3,12 @@ package com.bank.service;
 import com.bank.model.Account;
 import com.bank.model.User;
 import com.bank.repository.AccountRepository;
+import com.bank.repository.InMemoryAccountRepository;
 
 public class AccountService {
-    private final AccountRepository accountRepository;
+    private final InMemoryAccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(InMemoryAccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
     public void createAccount(User user) {
