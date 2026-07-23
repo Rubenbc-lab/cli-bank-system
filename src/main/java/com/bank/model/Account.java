@@ -11,14 +11,12 @@ public class Account {
         this.balance = 0.0;
     }
     public void deposit(double amount) {
-        if (amount > 0) {
-            this.balance += amount;
-        }
+        this.balance += amount;
     }
-    public void withdrawal(double amount) {
-        if (amount <= this.balance && amount > 0) {
-            this.balance -= amount;
-        }
+    public void withdraw(double amount) {
+
+        this.balance -= amount;
+
     }
     public User getUser() {
         return this.user;

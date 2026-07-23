@@ -9,7 +9,7 @@ public class Main {
         Account rubenAccount = new Account(Ruben);
         rubenAccount.deposit(100);
         System.out.println(rubenAccount.getBalance());
-        rubenAccount.withdrawal(50);
+        rubenAccount.withdraw(50);
         System.out.println(rubenAccount.getBalance());
 
     }
