@@ -11,10 +11,14 @@ public class AccountService {
     public AccountService(InMemoryAccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-    public void createAccount(User user) {
+
+    public Account createAccount(User user) {
         if (user != null) {
-            accountRepository.save(new Account(user));
+            Account account = new Account(user);
+           accountRepository.save(account);
+            return account;
         }
+        return null;
     }
     public void deposit(String id, double amount) {
         if (amount < 0) {
