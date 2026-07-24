@@ -3,7 +3,6 @@ package com.bank.service;
 import com.bank.model.Account;
 import com.bank.model.User;
 import com.bank.repository.AccountRepository;
-import com.bank.repository.InMemoryAccountRepository;
 import java.util.List;
 
 public class AccountService {
@@ -22,7 +21,7 @@ public class AccountService {
         return null;
     }
     public boolean deposit(String id, double amount) {
-        if (amount < 0) {
+        if (amount <= 0) {
             return false;
         }
         Account account = accountRepository.findById(id);
@@ -49,6 +48,9 @@ public class AccountService {
         Account sender = accountRepository.findById(fromAccountId);
         Account receiver = accountRepository.findById(toAccountId);
         if (sender == null || receiver == null) {
+            return false;
+        }
+        if (fromAccountId == null || toAccountId == null || fromAccountId.equalsIgnoreCase(toAccountId)) {
             return false;
         }
         if (amount > 0 && amount <= sender.getBalance()) {

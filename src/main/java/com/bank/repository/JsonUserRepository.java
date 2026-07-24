@@ -32,12 +32,14 @@ public class JsonUserRepository implements UserRepository {
     }
     @Override
     public void save(User user) {
-        usersMap.put(user.getUsername().toLowerCase(),user);
-        idsMap.put(user.getId().toLowerCase(), user);
-        try {
-            mapper.writeValue(file,usersMap);
-        } catch (IOException e) {
-            System.out.println("Cannot save the user in the file: " + e.getMessage());
+        if (user != null && user.getUsername() != null && user.getId() != null) {
+            usersMap.put(user.getUsername().toLowerCase(), user);
+            idsMap.put(user.getId().toLowerCase(), user);
+            try {
+                mapper.writeValue(file, usersMap);
+            } catch (IOException e) {
+                System.out.println("Cannot save the user in the file: " + e.getMessage());
+            }
         }
     }
     public User findByUsername(String username) {

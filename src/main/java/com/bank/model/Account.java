@@ -29,6 +29,9 @@ public class Account {
     public User getUser() {
         return this.user;
     }
+    public String getUserId() {
+        return this.userId;
+    }
     public String getIdentifier() {
         return this.identifier;
     }
@@ -37,6 +40,9 @@ public class Account {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+    public void setUserId(String id) {
+        this.userId = id;
     }
     public void setIdentifier(String id) {
         this.identifier = id;

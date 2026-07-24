@@ -113,22 +113,32 @@ public class UserInterface {
         System.out.println("Enter account ID");
         String id = scanner.nextLine();
         System.out.println("Amount to deposit?");
-        double amount = Double.parseDouble(scanner.nextLine());
-        if (accountService.deposit(id,amount)) {
-            System.out.println("Operation completed!");
-        } else {
-            System.out.println("Amount or Account ID invalid");
+
+        try {
+            double amount = Double.parseDouble(scanner.nextLine());
+            if (accountService.deposit(id, amount)) {
+                System.out.println("Operation completed!");
+            } else {
+                System.out.println("Amount or Account ID invalid");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
         }
     }
     private void withdrawMoney() {
         System.out.println("Enter account ID");
         String id = scanner.nextLine();
         System.out.println("Amount to withdraw");
-        double amount = Double.parseDouble(scanner.nextLine());
-        if (accountService.withdraw(id,amount)) {
-            System.out.println("Operation completed!");
-        } else {
-            System.out.println("Amount or Account ID invalid");
+
+        try {
+            double amount = Double.parseDouble(scanner.nextLine());
+            if (accountService.withdraw(id, amount)) {
+                System.out.println("Operation completed!");
+            } else {
+                System.out.println("Amount or Account ID invalid");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
         }
     }
     private void transferMoney() {
@@ -137,16 +147,20 @@ public class UserInterface {
         System.out.println("Enter receiver account ID");
         String receiver = scanner.nextLine();
         System.out.println("Amount to transfer");
-        double amount = Double.parseDouble(scanner.nextLine());
-        if (accountService.transfer(sender,receiver,amount)) {
-            System.out.println("Operation completed!");
 
-        } else {
-            System.out.println("Amount or Accounts IDs invalid");
+        try {
+            double amount = Double.parseDouble(scanner.nextLine());
+            if (accountService.transfer(sender, receiver, amount)) {
+                System.out.println("Operation completed!");
+            } else {
+                System.out.println("Amount or Accounts IDs invalid");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount format. Please enter a valid number.");
         }
     }
     private void viewAccounts() {
-        List<Account> accounts =accountService.getAccountsByUser(currentUser);
+        List<Account> accounts = accountService.getAccountsByUser(currentUser);
         if (accounts.isEmpty()) {
             System.out.println("The user has no accounts");
         } else {

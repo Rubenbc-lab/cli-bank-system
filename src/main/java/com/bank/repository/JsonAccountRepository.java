@@ -42,8 +42,15 @@ public class JsonAccountRepository implements AccountRepository{
     @Override
     public List<Account> findByUser(User user) {
         List<Account> userAccounts = new ArrayList<>();
+        if (user == null || user.getId() == null) {
+            return userAccounts;
+        }
+
         for (Account account : accounts.values()) {
-            if (account.getUser() != null && account.getUser().equals(user)) {
+            boolean matchesByUserId = account.getUserId() != null && account.getUserId().equalsIgnoreCase(user.getId());
+            boolean matchesByUserObject = account.getUser() != null && user.equals(account.getUser());
+
+            if (matchesByUserId || matchesByUserObject) {
                 userAccounts.add(account);
             }
         }

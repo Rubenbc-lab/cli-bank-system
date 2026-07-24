@@ -15,7 +15,7 @@ public class InMemoryUserRepository implements UserRepository {
     public void save(User user) {
         if (user != null) {
             users.put(user.getId(),user);
-            usersNames.put(user.getUsername(),user);
+            usersNames.put(user.getUsername().toLowerCase(),user);
         }
     }
     @Override
@@ -24,7 +24,7 @@ public class InMemoryUserRepository implements UserRepository {
     }
     @Override
     public User findByUsername(String username) {
-        return usersNames.get(username);
+        return usersNames.get(username.toLowerCase());
     }
     @Override
     public List<User> findAll() {

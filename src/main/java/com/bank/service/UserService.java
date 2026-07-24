@@ -1,6 +1,5 @@
 package com.bank.service;
 
-import com.bank.model.Account;
 import com.bank.model.User;
 import com.bank.repository.UserRepository;
 
@@ -12,6 +11,10 @@ public class UserService {
     }
 
     public boolean registerUser(String username, String password) {
+        if (username == null || username.trim().isEmpty() ||
+                password == null || password.trim().isEmpty()) {
+            return false;
+        }
         User existingUser = this.userRepository.findByUsername(username);
         if (existingUser != null) {
             return false;
