@@ -7,9 +7,9 @@ import com.bank.repository.InMemoryAccountRepository;
 import java.util.List;
 
 public class AccountService {
-    private final InMemoryAccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    public AccountService(InMemoryAccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
@@ -56,6 +56,7 @@ public class AccountService {
             sender.withdraw(amount);
             accountRepository.save(receiver);
             accountRepository.save(sender);
+
             return true;
         }
         return false;

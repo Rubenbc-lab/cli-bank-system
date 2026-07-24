@@ -1,5 +1,7 @@
 package com.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -7,10 +9,16 @@ import java.util.UUID;
 public class User {
     private String username;
     private String password;
-    private ArrayList<Account> accounts;
     private String id;
 
+    @JsonIgnore
+    private ArrayList<Account> accounts;
 
+
+
+    public User() {
+        this.accounts = new ArrayList<>();
+    }
     public User(String username,String password) {
         this.username = username;
         this.password = password;
@@ -25,8 +33,14 @@ public class User {
     public void setUsername(String name) {
         this.username = name;
     }
-    public String getUsername() {
-        return this.username;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setAccounts(ArrayList<Account> accounts) {
+        this.accounts = accounts;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     public String getPassword() {
         return this.password;
@@ -37,13 +51,17 @@ public class User {
     public ArrayList<Account> getAccounts() {
         return this.accounts;
     }
+    public String getUsername() {
+        return this.username;
+    }
+
     public boolean checkPassword(String password) {
         if (this.password.equals(password)) {
             return true;
         }
         return false;
     }
-    public void setPassword(String oldPassword, String newPassword) {
+    public void changePassword(String oldPassword, String newPassword) {
         if (checkPassword(oldPassword)) {
             this.password = newPassword;
         }

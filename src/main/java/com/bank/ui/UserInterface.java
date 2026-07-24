@@ -103,6 +103,8 @@ public class UserInterface {
         Account newAccount = accountService.createAccount(currentUser);
         if (newAccount != null) {
             System.out.println("Account created! Your ID is " + newAccount.getIdentifier());
+            currentUser.addAccount(newAccount);
+            userService.updateRepository(currentUser);
         } else {
                 System.out.println("Account cannot be created");
         }
@@ -138,6 +140,7 @@ public class UserInterface {
         double amount = Double.parseDouble(scanner.nextLine());
         if (accountService.transfer(sender,receiver,amount)) {
             System.out.println("Operation completed!");
+
         } else {
             System.out.println("Amount or Accounts IDs invalid");
         }
