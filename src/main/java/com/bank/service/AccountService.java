@@ -4,6 +4,7 @@ import com.bank.model.Account;
 import com.bank.model.User;
 import com.bank.repository.AccountRepository;
 import com.bank.repository.InMemoryAccountRepository;
+import java.util.List;
 
 public class AccountService {
     private final InMemoryAccountRepository accountRepository;
@@ -15,43 +16,51 @@ public class AccountService {
     public Account createAccount(User user) {
         if (user != null) {
             Account account = new Account(user);
-           accountRepository.save(account);
+            accountRepository.save(account);
             return account;
         }
         return null;
     }
-    public void deposit(String id, double amount) {
+    public boolean deposit(String id, double amount) {
         if (amount < 0) {
-            return;
+            return false;
         }
         Account account = accountRepository.findById(id);
         if (account == null) {
-            return;
+            return false;
         }
         account.deposit(amount);
         accountRepository.save(account);
+        return true;
     }
-    public void withdraw(String id, double amount) {
+    public boolean withdraw(String id, double amount) {
         Account account = accountRepository.findById(id);
         if (account == null) {
-            return;
+            return false;
         }
         if (amount > 0 && amount <= account.getBalance()) {
             account.withdraw(amount);
             accountRepository.save(account);
+            return true;
         }
+        return false;
     }
-    public void transfer(String fromAccountId, String toAccountId, double amount) {
+    public boolean transfer(String fromAccountId, String toAccountId, double amount) {
         Account sender = accountRepository.findById(fromAccountId);
         Account receiver = accountRepository.findById(toAccountId);
         if (sender == null || receiver == null) {
-            return;
+            return false;
         }
         if (amount > 0 && amount <= sender.getBalance()) {
             receiver.deposit(amount);
             sender.withdraw(amount);
             accountRepository.save(receiver);
             accountRepository.save(sender);
+            return true;
         }
+        return false;
+    }
+    public List<Account> getAccountsByUser(User user) {
+        return accountRepository.findByUser(user);
     }
 }

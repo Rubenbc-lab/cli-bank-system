@@ -34,4 +34,8 @@ public class Account {
         counter += 1;
         return "ES91-" + counter;
     }
+    @Override
+    public String toString() {
+        return "Account ID: " + getIdentifier() + ", Account balance: " + getBalance();
+    }
 }

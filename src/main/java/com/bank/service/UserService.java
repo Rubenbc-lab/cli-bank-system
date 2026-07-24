@@ -11,18 +11,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void registerUser(String username, String password) {
+    public boolean registerUser(String username, String password) {
         User existingUser = this.userRepository.findByUsername(username);
         if (existingUser != null) {
-            return;
+            return false;
         }
         User user = new User(username, password);
         userRepository.save(user);
+        return true;
     }
     public boolean login(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            System.out.println("User doesn't exist");
             return false;
         }
         return user.checkPassword(password);
