@@ -8,6 +8,10 @@ import com.bank.service.UserService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Command user interface class responsible for capturing user input from the console and orchestrating
+ * interactions between the user and the application's services
+ */
 public class UserInterface {
     private final AccountService accountService;
     private final UserService userService;
@@ -15,6 +19,12 @@ public class UserInterface {
     private User currentUser;
     private boolean running = true;
 
+    /**
+     * Constructor that implements the account service, user service and the scanner class
+     * @param accountService Service that manages the accounts information
+     * @param userService Service that manages the users information
+     * @param scanner Scanner instance used for reading inputs
+     */
     public UserInterface(AccountService accountService, UserService userService, Scanner scanner) {
         this.accountService = accountService;
         this.userService = userService;
@@ -22,6 +32,10 @@ public class UserInterface {
         this.currentUser = null;
     }
 
+    /**
+     * Main control loop that switches between the guest menu (register/login)
+     * and the authenticated user session loop
+     */
     public void mainMenu() {
         while(true) {
             if (currentUser == null) {
@@ -37,6 +51,10 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Secondary loop displayed when a user is already logged in
+     * Render banking operations
+     */
     private void start() {
         this.running = true;
         while (running) {
@@ -51,6 +69,11 @@ public class UserInterface {
             processCommand(command);
         }
     }
+
+    /**
+     * Routes the raw command string entered by the user to its corresponding UI action
+     * @param command The command that must be processed
+     */
     private void processCommand(String command) {
         switch (command) {
             case "1" -> register();
@@ -64,6 +87,11 @@ public class UserInterface {
             case "f" -> logout();
         }
     }
+
+    /**
+     * Handles the registration workflow
+     * Automatically attempts to log in after a successful registration
+     */
     private void register() {
         System.out.println("Enter username");
         String username = scanner.nextLine();
@@ -81,8 +109,11 @@ public class UserInterface {
         } else {
             System.out.println("A problem has occurred logging in");
         }
-
     }
+
+    /**
+     * Prompts for user credentials and authenticates the user into the system
+     */
     private void login() {
         System.out.println("Enter username");
         String username = scanner.nextLine();
@@ -95,10 +126,18 @@ public class UserInterface {
             System.out.println("Username or password incorrect");
         }
     }
+
+    /**
+     * Exits the application
+     */
     private void exit() {
         System.out.println("Goodbye!");
         System.exit(0);
     }
+
+    /**
+     * Creates a new account associated at the current user logged in
+     */
     private void createAccount() {
         Account newAccount = accountService.createAccount(currentUser);
         if (newAccount != null) {
@@ -109,6 +148,11 @@ public class UserInterface {
                 System.out.println("Account cannot be created");
         }
     }
+
+    /**
+     * Prompts for the account ID to deposit the money, and for the amount of money,
+     * then deposits the money if possible
+     */
     private void depositMoney() {
         System.out.println("Enter account ID");
         String id = scanner.nextLine();
@@ -125,6 +169,10 @@ public class UserInterface {
             System.out.println("Invalid amount format. Please enter a valid number.");
         }
     }
+
+    /**
+     * Handles money withdrawal operation with input validation to prevent format errors
+     */
     private void withdrawMoney() {
         System.out.println("Enter account ID");
         String id = scanner.nextLine();
@@ -141,6 +189,10 @@ public class UserInterface {
             System.out.println("Invalid amount format. Please enter a valid number.");
         }
     }
+
+    /**
+     * Handles the workflow to transfer money between accounts, with input validation
+     */
     private void transferMoney() {
         System.out.println("Enter your account ID");
         String sender = scanner.nextLine();
@@ -159,6 +211,10 @@ public class UserInterface {
             System.out.println("Invalid amount format. Please enter a valid number.");
         }
     }
+
+    /**
+     * Displays all accounts associated to the current logged-in user
+     */
     private void viewAccounts() {
         List<Account> accounts = accountService.getAccountsByUser(currentUser);
         if (accounts.isEmpty()) {
@@ -168,7 +224,10 @@ public class UserInterface {
                 System.out.println(account);
             }
         }
-
+        /**
+         * Logs out the current user, terminates the session loop, and returns to the
+         * guest main menu
+         */
     }
     private void logout() {
         System.out.println("Logging out");
